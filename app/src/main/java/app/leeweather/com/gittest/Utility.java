@@ -7,7 +7,7 @@ import android.text.TextUtils;
  */
 public class Utility {
     /*
-    解析和处理服务器返回的省级数据
+   瑙ｆ瀽
      */
     public synchronized static boolean handleProvincesResponse(CoolWeatherDB coolWeatherDB,String response){
         if (!TextUtils.isEmpty(response)){
@@ -18,7 +18,7 @@ public class Utility {
                     Province province = new Province();
                     province.setProvinceCode(array[0]);
                     province.setProvinceName(array[1]);
-                    //将解析出来的数据存储到province表
+                    //灏嗚В鏋愬嚭鏉ョ殑鏁版嵁鍌ㄥ瓨
                     coolWeatherDB.saveProvince(province);
                 }
                 return true;
@@ -26,9 +26,7 @@ public class Utility {
         }
         return false;
     }
-    /*
-    将解析出来的数据存储到city表
-     */
+
     public synchronized static boolean handleCitiesResponse(CoolWeatherDB coolWeatherDB,String response,int provinceId){
         if (!TextUtils.isEmpty(response)){
             String[] allCities = response.split(",");
@@ -39,7 +37,7 @@ public class Utility {
                    city.setCityCode(array[0]);
                     city.setCityName(array[1]);
                     city.setProvinceId(provinceId);
-                    //将解析出来的数据存储到city表
+
                     coolWeatherDB.saveCity(city);
                 }
                 return true;
@@ -48,9 +46,7 @@ public class Utility {
         return false;
 
     }
-    /*
-   将解析出来的数据存储到county表
-    */
+
     public synchronized static boolean handleCountriesResponse(CoolWeatherDB coolWeatherDB,String response,int cityId){
         if (!TextUtils.isEmpty(response)){
             String[] allCountries = response.split(",");
@@ -61,7 +57,7 @@ public class Utility {
                     county.setCountyCode(array[0]);
                     county.setCountyName(array[1]);
                     county.setCityId(cityId);
-                    //将解析出来的数据存储到county表
+
                     coolWeatherDB.saveCounty(county);
                 }
                 return true;

@@ -33,13 +33,13 @@ public class HttpUtil {
 
                     }
                     if (listener !=null){
-                        //回调onfinish方法
+
                         listener.onFinish(response.toString());
 
                     }
                 }catch (Exception e ){
                     if (listener !=null){
-                        //回调on Error(e)
+
                         listener.onError(e);
 
                     }
