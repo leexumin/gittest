@@ -112,14 +112,14 @@ public class CoolWeatherDB {
         return list;
     }
     /*
-    将County实例储存到数据库
+    将Country实例储存到数据库
      */
-    public void saveCounty(County county){
-        if (county!= null){
+    public void saveCounty(County country){
+        if (country!= null){
             ContentValues values =new ContentValues();
-            values.put("county_name",county.getCountyName());
-            values.put("county_code",county.getCountyCode());
-            values.put("city_id", county.getCityId());
+            values.put("county_name",country.getCountyName());
+            values.put("county_code",country.getCountyCode());
+            values.put("city_id", country.getCityId());
             db.insert("County", null, values);
         }
     }
