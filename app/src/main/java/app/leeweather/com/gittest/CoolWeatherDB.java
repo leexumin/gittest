@@ -38,7 +38,7 @@ public class CoolWeatherDB {
         return coolWeatherDB;
     }
     /*
-    在获取实例存储到数据库
+    在获取省份实例存储到数据库
 
      */
  public void saveProvince(Province province){
@@ -91,7 +91,7 @@ public class CoolWeatherDB {
      */
     public List<City> loadCities(int provinceId){
         List<City>list =new ArrayList<City>();
-        Cursor cursor =db.query("City", null, "province_id =?", new String[]{String.valueOf(provinceId)}, null, null, null);
+        Cursor cursor =db.query("City", null, "province_id = ?", new String[]{String.valueOf(provinceId)}, null, null, null);
         if (cursor.moveToFirst()){
             do{
                 City city =new City();
@@ -113,12 +113,12 @@ public class CoolWeatherDB {
     /*
     县城实例
      */
-    public void saveCounty(County country){
-        if (country!= null){
+    public void saveCounty(County county){
+        if (county!= null){
             ContentValues values =new ContentValues();
-            values.put("county_name",country.getCountyName());
-            values.put("county_code",country.getCountyCode());
-            values.put("city_id", country.getCityId());
+            values.put("county_name",county.getCountyName());
+            values.put("county_code",county.getCountyCode());
+            values.put("city_id", county.getCityId());
             db.insert("County", null, values);
         }
     }

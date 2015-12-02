@@ -21,7 +21,7 @@ import java.util.List;
 public class ChooseAreaActivity extends Activity {
     public static final int LEVEL_PROVINCE =0;
     public static final int LEVEL_CITY =1;
-    public static final int LEVEL_COUNTRY =2;
+    public static final int LEVEL_COUNTY =2;
 
 
     private ProgressDialog progressDialog;
@@ -124,7 +124,7 @@ public class ChooseAreaActivity extends Activity {
             }adapter.notifyDataSetChanged();
             listView.setSelection(0);
             titleText.setText(selectedCity.getCityName());
-            currentLevel = LEVEL_COUNTRY;
+            currentLevel = LEVEL_COUNTY;
         }else {
             queryFromServer(selectedCity.getCityCode(),"county");
         }
@@ -212,7 +212,7 @@ public class ChooseAreaActivity extends Activity {
  */
     @Override
     public void onBackPressed(){
-        if (currentLevel ==LEVEL_COUNTRY){
+        if (currentLevel ==LEVEL_COUNTY){
             queryCities();
         }else if (currentLevel == LEVEL_CITY){
             queryProvinces();
