@@ -14,7 +14,7 @@ import java.util.List;
 public class CoolWeatherDB {
 
 
-    public static final String DB_NAME ="CoolWeather";
+    public static final String DB_NAME ="cool_Weather";
     /*
     数据库版本
     */
