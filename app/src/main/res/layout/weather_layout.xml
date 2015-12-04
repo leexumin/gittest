@@ -9,14 +9,32 @@
         android:layout_height="50dp"
         android:background="#484E61"
         >
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/switch_city"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/abc_list_focused_holo"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="#fff"
+            android:textColor="#FFF"
             android:textSize="24sp"
             android:id="@+id/city_name"
 
+            />
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/refresh_weather"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/abc_ratingbar_full_material"
             />
     </RelativeLayout>
     <RelativeLayout
