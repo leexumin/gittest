@@ -22,7 +22,7 @@ import java.util.Locale;
  */
 public class HttpUtil {
 
-    public static void senddHttpRequest(final String address,final HttpCallbackListener listener){
+    public static void sendHttpRequest(final String address,final HttpCallbackListener listener){
         new Thread(new Runnable() {
             @Override
             public void run() {

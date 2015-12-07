@@ -163,7 +163,7 @@ public class ChooseAreaActivity extends Activity {
             address ="http://www.weather.com.cn/data/list3/city.xml";
         }
         showProgressDialog();
-        HttpUtil.senddHttpRequest(address, new HttpCallbackListener() {
+        HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
             @Override
             public void onFinish(String response) {
                 boolean result = false;

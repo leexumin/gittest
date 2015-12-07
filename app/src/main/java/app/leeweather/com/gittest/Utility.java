@@ -16,6 +16,7 @@ import java.util.Locale;
  * Created by leexumin on 2015/12/1.
  */
 public class Utility {
+
     /*
    解析
      */
@@ -77,8 +78,8 @@ public class Utility {
 
     }
     /*
-   解析天气预报服务器返回的JSON数据，并存储到本地
-    */
+ 解析天气预报服务器返回的JSON数据，并存储到本地(有BUG)
+  */
     public static void handleWeatherResponse(Context context,String response) {
         try{
             JSONObject jsonObject = new JSONObject(response);
@@ -99,12 +100,11 @@ public class Utility {
 
      */
     public static void saveWeatherInfo(Context context,String cityName,String weatherCode,String temp1,
-                                       String temp2,String weatherDesp,String publishTime
-    ){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年m月d日", Locale.CHINA);
+                                       String temp2,String weatherDesp,String publishTime){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);//
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean("city_selected",true);
-        editor.putString("city_mame", cityName);
+        editor.putString("city_name", cityName);
         editor.putString("weather_code",weatherCode);
         editor.putString("temp1",temp1);
         editor.putString("temp2",temp2);
@@ -114,5 +114,6 @@ public class Utility {
         editor.commit();
 
     }
+
 }
 

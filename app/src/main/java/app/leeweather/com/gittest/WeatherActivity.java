@@ -1,7 +1,7 @@
 package app.leeweather.com.gittest;
 
 import android.app.Activity;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -47,6 +47,10 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
         temp2Text = (TextView)findViewById(R.id.temp2);
         currentDataText= (TextView)findViewById(R.id.current_data);
         String countyCode =getIntent().getStringExtra("county_code");
+        switchCity = (Button) findViewById(R.id.switch_city);
+        refreshWeather =(Button)findViewById(R.id.refresh_weather);
+        switchCity.setOnClickListener(this);
+        refreshWeather.setOnClickListener(this);
 
 
        if (!TextUtils.isEmpty(countyCode)){
@@ -62,10 +66,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
         //没有县级代号时就直接查询显示本地天气
             showWeather();
         }
-        switchCity = (Button) findViewById(R.id.switch_city);
-        refreshWeather =(Button)findViewById(R.id.refresh_weather);
-        switchCity.setOnClickListener(this);
-        refreshWeather.setOnClickListener(this);
+
     }
     @Override
     public void onClick(View v) {
@@ -94,7 +95,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
      */
     private void queryWeatherCode (String countyCode){
 
-        String address = "http://www.weather.com.cn/data/list3/city" +  countyCode + ".xml";
+        String address = "http://www.weather.com.cn/data/list3/city"+countyCode +".xml";
         queryFromServer(address,"countyCode");
 
 
@@ -104,14 +105,14 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
     查询天气代号所对应的天气
     * */
     private void queryWeatherInfo(String weatherCode){
-        String address = "http://www.weather.com.cn/data/cityinfo/" + weatherCode + ".html";
+        String address = "http://www.weather.com.cn/data/cityinfo/"+weatherCode+".html";
         queryFromServer(address,"weatherCode");
     }
     /*根据传入的地址和类型，去向服务器查询天气的代号或天气信息
 
      */
     private void queryFromServer(final String address,final String type) {
-        HttpUtil.senddHttpRequest(address, new HttpCallbackListener() {
+        HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
             @Override
             public void onFinish(final String response) {
                 if ("countyCode".equals(type)) {
@@ -160,7 +161,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
         temp1Text.setText(prefs.getString("temp1",""));
         weatherDespText.setText(prefs.getString("weather_desp",""));
         publishText.setText("今天"+ prefs.getString("publish_time","")+"发布");
-        currentDataText.setText(prefs.getString("current_date",""));
+        currentDataText.setText(prefs.getString("current_data",""));
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityNameText.setVisibility(View.VISIBLE);
 
