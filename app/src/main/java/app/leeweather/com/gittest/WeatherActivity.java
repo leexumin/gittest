@@ -161,9 +161,11 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
         temp1Text.setText(prefs.getString("temp1",""));
         weatherDespText.setText(prefs.getString("weather_desp",""));
         publishText.setText("今天"+ prefs.getString("publish_time","")+"发布");
-        currentDataText.setText(prefs.getString("current_data",""));
+        currentDataText.setText(prefs.getString("current_data", ""));
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityNameText.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this,AutoUpdateService.class);
+        startService(intent);
 
     }
 }
