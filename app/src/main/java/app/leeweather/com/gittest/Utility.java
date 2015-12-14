@@ -78,7 +78,7 @@ public class Utility {
 
     }
     /*
- 解析天气预报服务器返回的JSON数据，并存储到本地(有BUG)
+ 解析天气预报服务器返回的JSON数据，并存储到本地
   */
     public static void handleWeatherResponse(Context context,String response) {
         try{

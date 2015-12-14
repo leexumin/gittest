@@ -59,7 +59,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
             publishText.setText("正在很努力地同步...");
             weatherInfoLayout.setVisibility(View.INVISIBLE);
             cityNameText.setVisibility(View.INVISIBLE);
-            queryWeatherCode(countyCode);
+            queryWeatherCode(countyCode);//原为queryWeatherCode
 
 
     }else {
@@ -90,22 +90,23 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
 
         }
     }
+
     /*
     查询县级对应代号的天气代号
      */
     private void queryWeatherCode (String countyCode){
 
         String address = "http://www.weather.com.cn/data/list3/city"+countyCode +".xml";
-        queryFromServer(address,"countyCode");
+        queryFromServer(address,"countyCode");}
+        //http://wthrcdn.etouch.cn/weather_mini?citykey=101010100(使用新的接口)
 
 
-
-    }
     /*
     查询天气代号所对应的天气
     * */
-    private void queryWeatherInfo(String weatherCode){
-        String address = "http://www.weather.com.cn/data/cityinfo/"+weatherCode+".html";
+  private void queryWeatherInfo(String weatherCode){
+        //String address ="http://wthrcdn.etouch.cn/weather_mini?citykey="+weatherCode;
+       String address = "http://www.weather.com.cn/data/cityinfo/"+weatherCode+".html";
         queryFromServer(address,"weatherCode");
     }
     /*根据传入的地址和类型，去向服务器查询天气的代号或天气信息
@@ -160,7 +161,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
         temp2Text.setText(prefs.getString("temp2",""));
         temp1Text.setText(prefs.getString("temp1",""));
         weatherDespText.setText(prefs.getString("weather_desp",""));
-        publishText.setText("今天"+ prefs.getString("publish_time","")+"发布");
+        publishText.setText("今天"+ prefs.getString("publish_time", "") + "发布");
         currentDataText.setText(prefs.getString("current_data", ""));
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityNameText.setVisibility(View.VISIBLE);
