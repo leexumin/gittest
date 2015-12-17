@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -77,20 +78,39 @@ public class Utility {
         return false;
 
     }
-    /*
+   /*
  解析天气预报服务器返回的JSON数据，并存储到本地
   */
     public static void handleWeatherResponse(Context context,String response) {
         try{
+        //解析第一层数据
             JSONObject jsonObject = new JSONObject(response);
-            JSONObject weatherInfo = jsonObject.getJSONObject("weatherinfo");
-            String cityName = weatherInfo.getString("city");
-            String weatherCode = weatherInfo.getString("cityid");
-            String temp1 = weatherInfo.getString("temp1");
-            String temp2 = weatherInfo.getString("temp2");
-            String weatherDesp = weatherInfo.getString("weather");
-            String publishTime = weatherInfo.getString("ptime");
-            saveWeatherInfo(context,cityName,weatherCode,temp1,temp2,weatherDesp,publishTime);
+            JSONObject crentdata = jsonObject.getJSONObject("data");
+          String wendu = crentdata.getString("wendu");
+            String zhuyi = crentdata.getString("ganmao");
+          String cityname = crentdata.getString("city");
+          //解析第二层数组数据，
+            JSONArray forecast = crentdata.getJSONArray("forecast");
+            JSONObject fore = forecast.getJSONObject(0);
+            //当天天气情况
+             String gaowen = fore.getString("high");
+             String fengli = fore.getString("fengli");
+            String fengxiang = fore.getString("fengxiang");
+            String riqi= fore.getString("date");
+             String diwen=fore.getString("low");
+             String type = fore.getString("type");
+            JSONObject fore1 = forecast.getJSONObject(1);//次日天气
+            String gaowen1 = fore1.getString("high");
+            String fengli1 = fore1.getString("fengli");
+            String fengxiang1= fore1.getString("fengxiang");
+            String riqi1 = fore1.getString("date");
+            String diwen1 =fore1.getString("low");
+            String type1 = fore1.getString("type");
+
+
+           saveWeatherInfo(context,wendu,zhuyi,cityname,gaowen,fengli,
+                   fengxiang,riqi,diwen,type,gaowen1,
+                   fengli1,fengxiang1,riqi1,diwen1,type1);
 
         }catch (JSONException e){
             e.printStackTrace();
@@ -99,21 +119,37 @@ public class Utility {
     /*将服务器返回的天气数据存储到SharedPreferences文件中
 
      */
-    public static void saveWeatherInfo(Context context,String cityName,String weatherCode,String temp1,
-                                       String temp2,String weatherDesp,String publishTime){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        editor.putBoolean("city_selected",true);
-        editor.putString("city_name", cityName);
-        editor.putString("weather_code",weatherCode);
-        editor.putString("temp1",temp1);
-        editor.putString("temp2",temp2);
-        editor.putString("weather_desp",weatherDesp);
-        editor.putString("publish_time",publishTime);
-        editor.putString("current_data",sdf.format(new Date()));
+ public static void saveWeatherInfo(Context context,String wendu,String zhuyi,String cityname,
+                                String   gaowen, String fengli,
+                                   String fengxiang,String riqi,String diwen, String type,String gaowen1,
+                              String  fengli1,String fengxiang1,String riqi1,String diwen1,String type1){
+     SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
+      SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+     editor.putBoolean("city_selected", true);
+      //当日天气的临时存储
+       editor.putString("wendu",wendu);
+       editor.putString("zhuyi",zhuyi);
+        editor.putString("city_name", cityname);
+        editor.putString("gaowen",gaowen);
+        editor.putString("diwen",diwen);
+        editor.putString("d1",riqi);
+        editor.putString("type",type);
+        editor.putString("fengli",fengli);
+        editor.putString("fengxiang",fengxiang);
+        //次日天气的临时存储
+     editor.putString("gaowen1",gaowen1);
+     editor.putString("diwen1",diwen1);
+     editor.putString("d2",riqi1);
+     editor.putString("type1",type1);
+     editor.putString("fengli1",fengli1);
+     editor.putString("fengxiang1",fengxiang1);
+
+     editor.putString("current_data",sdf.format(new Date()));
         editor.commit();
 
     }
+
+
 
 }
 
