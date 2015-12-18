@@ -16,7 +16,7 @@
             android:layout_centerVertical="true"
             android:id="@+id/switch_city"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/house134"
+            android:background="@drawable/homejian"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@drawable/update11"
+            android:background="@drawable/shuaxin"
             />
     </RelativeLayout>
     <RelativeLayout
@@ -77,15 +77,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dangqianwendu"
-            android:layout_marginTop="70dp"
-            android:layout_centerInParent="true"
+            android:layout_marginTop="230dp"
+            android:layout_centerHorizontal="true"
             android:textColor="#FFF"
             android:textSize="35sp"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="310dp"
+            android:layout_marginTop="330dp"
             android:id="@+id/date2_text"
             android:layout_alignParentLeft="true"
             android:textColor="#FFF"
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/day2weather_text"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="335dp"
+            android:layout_marginTop="355dp"
             android:textColor="#FFF"
             android:textSize="18sp"
             />
@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="215dp"
             android:id="@+id/current_data"
-            android:layout_marginLeft="110dp"
+            android:layout_centerHorizontal="true"
             android:textColor="#FFF"
             android:textSize="18sp"
             />

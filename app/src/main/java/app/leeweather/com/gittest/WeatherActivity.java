@@ -80,7 +80,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
 
     }else {
         //没有县级代号时就直接查询显示本地天气
-          // showWeather();
+           showWeather();
         }
 
     }
@@ -98,9 +98,9 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
             case R.id.refresh_weather:
                    date1.setText("正在很努力地同步...");
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                String weatherCode =  prefs.getString("weather_code","");
-                if (!TextUtils.isEmpty(weatherCode)){
-                    queryWeatherInfo(weatherCode);
+                String cityname =  prefs.getString("city_name", "");//有BUG。。
+                if (!TextUtils.isEmpty(cityname)){
+                    refresh(cityname);
                 }
                 break;
             default:
@@ -112,18 +112,23 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
     /*
     查询县级对应代号的天气代号
      */
-    private void queryWeatherCode (String countyCode){
+
+       private void queryWeatherCode (String countyCode){
 
         String address = "http://www.weather.com.cn/data/list3/city"+countyCode +".xml";
-        queryFromServer(address,"countyCode");}
+       queryFromServer(address,"countyCode");}
         //http://wthrcdn.etouch.cn/weather_mini?citykey=101010100(使用新的接口)
+        private void refresh (String cityname){
 
+            String address = "http://wthrcdn.etouch.cn/weather_mini?city="+cityname;
+            queryFromServer(address,"cityname");}
 
     /*
     查询天气代号所对应的天气
     * */
-  private void queryWeatherInfo(String weatherCode){
+      private void queryWeatherInfo(String weatherCode){
       String address ="http://wthrcdn.etouch.cn/weather_mini?citykey="+weatherCode;
+
       //String address = "http://www.weather.com.cn/data/cityinfo/"+weatherCode+".html";
 
         queryFromServer(address,"weatherCode");
@@ -142,11 +147,12 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
                         if (array != null && array.length == 2) {
                             String weatherCode = array[1];
                             queryWeatherInfo(weatherCode);
+
                         }
                     }
 
 
-                } else if ("weatherCode".equals(type)) {
+                } else if ("weatherCode".equals(type) || "cityname".equals(type)) {
                     //处理从服务器返回的信息
                     Utility.handleWeatherResponse(WeatherActivity.this, response);
                     runOnUiThread(new Runnable() {
@@ -181,16 +187,14 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
         nowTemptext.setText("当前温度"+" "+prefs.getString("wendu", "")+"℃");
         D1weatherDespText.setText(prefs.getString("diwen","")+"、"+prefs.getString("gaowen","")+"、"+
                prefs.getString("fengxiang","")+ prefs.getString("fengli","")+"、"+prefs.getString("type","")+"天");
-        date2.setText("明天:"+" "+prefs.getString("d2",""));
-       D2weatherDespText.setText(prefs.getString("diwen1","")+"、"+prefs.getString("gaowen1","")+"、"+
+               date2.setText("明天:"+" "+prefs.getString("d2",""));
+        D2weatherDespText.setText(prefs.getString("diwen1","")+"、"+prefs.getString("gaowen1","")+"、"+
                prefs.getString("fengxiang1","")+ prefs.getString("fengli1","")+"、"+prefs.getString("type1","")+"天");
-       zhuyiText.setText("天气提示："+" "+prefs.getString("zhuyi",""));
-       // temp1Text.setText(prefs.getString("temp1",""));
-        //weatherDespText.setText(prefs.getString("weather_desp",""));
-        date1.setText("今天:" +" "+ prefs.getString("d1", ""));
-      currentDataText.setText(prefs.getString("current_data", ""));
-       weatherInfoLayout.setVisibility(View.VISIBLE);
-      cityNameText.setVisibility(View.VISIBLE);
+        zhuyiText.setText("天气提示："+" "+prefs.getString("zhuyi",""));
+               date1.setText("今天:" +" "+ prefs.getString("d1", ""));
+        currentDataText.setText(prefs.getString("current_data", ""));
+        weatherInfoLayout.setVisibility(View.VISIBLE);
+        cityNameText.setVisibility(View.VISIBLE);
         Intent intent = new Intent(this,AutoUpdateService.class);
         startService(intent);
 

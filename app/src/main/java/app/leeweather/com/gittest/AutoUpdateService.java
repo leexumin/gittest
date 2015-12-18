@@ -29,7 +29,7 @@ public class AutoUpdateService  extends Service {
             }
         }).start();
         AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        int anHour = 8*60*60*1000;//8小时的毫秒数
+        int anHour = 4*60*60*1000;//4小时的毫秒数
         long triggerAtTime = SystemClock.elapsedRealtime()+ anHour;
         Intent i = new Intent(this,AutoUpdateService.class);
         PendingIntent pi = PendingIntent.getBroadcast(this,0,i,0);
@@ -40,8 +40,8 @@ public class AutoUpdateService  extends Service {
     //更新天气信息
     private  void updateWeather(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String weatherCode = prefs.getString("weather_code", "");
-        String address = "http://www.weather.com.cn/data/cityinfo/"+ weatherCode +".html";
+        String cityname = prefs.getString("city_name", "");//有BUG。。。
+        String address = "http://wthrcdn.etouch.cn/weather_mini?city="+cityname;
         HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
             @Override
             public void onFinish(String response) {
