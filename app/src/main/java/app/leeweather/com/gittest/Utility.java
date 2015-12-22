@@ -81,7 +81,7 @@ public class Utility {
    /*
  解析天气预报服务器返回的JSON数据，并存储到本地
   */
-    public static void handleWeatherResponse(Context context,String response) {
+    public static void handleWeatherResponse(Context context,String response,String citykey  ) {
         try{
         //解析第一层数据
             JSONObject jsonObject = new JSONObject(response);
@@ -108,9 +108,10 @@ public class Utility {
             String type1 = fore1.getString("type");
 
 
+
            saveWeatherInfo(context,wendu,zhuyi,cityname,gaowen,fengli,
                    fengxiang,riqi,diwen,type,gaowen1,
-                   fengli1,fengxiang1,riqi1,diwen1,type1);
+                   fengli1,fengxiang1,riqi1,diwen1,type1,citykey);
 
         }catch (JSONException e){
             e.printStackTrace();
@@ -122,11 +123,12 @@ public class Utility {
  public static void saveWeatherInfo(Context context,String wendu,String zhuyi,String cityname,
                                 String   gaowen, String fengli,
                                    String fengxiang,String riqi,String diwen, String type,String gaowen1,
-                              String  fengli1,String fengxiang1,String riqi1,String diwen1,String type1){
+                              String  fengli1,String fengxiang1,String riqi1,String diwen1,String type1,String citykey){
      SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
       SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
      editor.putBoolean("city_selected", true);
       //当日天气的临时存储
+     editor.putString("citykey",citykey);
        editor.putString("wendu",wendu);
        editor.putString("zhuyi",zhuyi);
         editor.putString("city_name", cityname);

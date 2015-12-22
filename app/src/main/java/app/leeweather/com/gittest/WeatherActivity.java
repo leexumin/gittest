@@ -27,6 +27,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
     //用于天气提醒
     private  TextView zhuyiText;
 
+
     //用于显示当前气温
     private TextView nowTemptext;
     private TextView D2weatherDespText;
@@ -96,11 +97,11 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
                 finish();
                 break;
             case R.id.refresh_weather:
-                   date1.setText("正在很努力地同步...");
+                   currentDataText.setText("正在更新天气...");
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                String cityname =  prefs.getString("city_name", "");//有BUG。。
-                if (!TextUtils.isEmpty(cityname)){
-                    refresh(cityname);
+               String citykey =  prefs.getString("citykey", "");//有BUG。。
+                if (!TextUtils.isEmpty(citykey)){
+                  queryWeatherInfo(citykey);
                 }
                 break;
             default:
@@ -116,12 +117,8 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
        private void queryWeatherCode (String countyCode){
 
         String address = "http://www.weather.com.cn/data/list3/city"+countyCode +".xml";
-       queryFromServer(address,"countyCode");}
-        //http://wthrcdn.etouch.cn/weather_mini?citykey=101010100(使用新的接口)
-        private void refresh (String cityname){
+       queryFromServer(address,"countyCode",null);}
 
-            String address = "http://wthrcdn.etouch.cn/weather_mini?city="+cityname;
-            queryFromServer(address,"cityname");}
 
     /*
     查询天气代号所对应的天气
@@ -129,32 +126,33 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
       private void queryWeatherInfo(String weatherCode){
       String address ="http://wthrcdn.etouch.cn/weather_mini?citykey="+weatherCode;
 
-      //String address = "http://www.weather.com.cn/data/cityinfo/"+weatherCode+".html";
-
-        queryFromServer(address,"weatherCode");
+        queryFromServer(address,"weatherCode",weatherCode);
     }
     /*根据传入的地址和类型，去向服务器查询天气的代号或天气信息
 
      */
-    private void queryFromServer(final String address,final String type) {
+    private void queryFromServer(final String address,final String type,final String citykey) {
+
         HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
             @Override
             public void onFinish(final String response) {
+
                 if ("countyCode".equals(type)) {
                     if (!TextUtils.isEmpty(response)) {
                         //从服务器解析出天气代号
                         String[] array = response.split("\\|");
                         if (array != null && array.length == 2) {
                             String weatherCode = array[1];
+
                             queryWeatherInfo(weatherCode);
 
                         }
                     }
 
 
-                } else if ("weatherCode".equals(type) || "cityname".equals(type)) {
+                } else if ("weatherCode".equals(type)  ) {
                     //处理从服务器返回的信息
-                    Utility.handleWeatherResponse(WeatherActivity.this, response);
+                    Utility.handleWeatherResponse(WeatherActivity.this, response,citykey);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -162,6 +160,8 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
                         }
                     });
                 }
+
+
             }
 
             @Override

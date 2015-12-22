@@ -16,7 +16,8 @@
             android:layout_centerVertical="true"
             android:id="@+id/switch_city"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/homejian"
+            android:background= "@drawable/homeselector"
+
             />
         <TextView
             android:layout_width="wrap_content"
@@ -33,7 +34,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@drawable/shuaxin"
+            android:background="@drawable/gengxin"
             />
     </RelativeLayout>
     <RelativeLayout
