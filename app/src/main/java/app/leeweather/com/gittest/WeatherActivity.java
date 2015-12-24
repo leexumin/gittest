@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -49,6 +50,9 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
         cityNameText = (TextView)findViewById(R.id.city_name);
         date1 = (TextView)findViewById(R.id.date1_text);
         zhuyiText =(TextView)findViewById(R.id.zhuyi_text);
+        zhuyiText.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG ); //下划线
+
+        zhuyiText.getPaint().setAntiAlias(true);//抗锯齿
         D2weatherDespText =(TextView)findViewById(R.id.day2weather_text);
 
       D1weatherDespText= (TextView)findViewById(R.id.day1weather_text);
@@ -99,7 +103,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
             case R.id.refresh_weather:
                    currentDataText.setText("正在更新天气...");
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-               String citykey =  prefs.getString("citykey", "");//有BUG。。
+               String citykey =  prefs.getString("citykey", "");
                 if (!TextUtils.isEmpty(citykey)){
                   queryWeatherInfo(citykey);
                 }
@@ -150,7 +154,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
                     }
 
 
-                } else if ("weatherCode".equals(type)  ) {
+                } else if ("weatherCode".equals(type) || "citykey".equals(type) ) {
                     //处理从服务器返回的信息
                     Utility.handleWeatherResponse(WeatherActivity.this, response,citykey);
                     runOnUiThread(new Runnable() {
